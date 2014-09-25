@@ -13,7 +13,7 @@ test('monkeysaudio (.ape)', function (t) {
   new mm(sample)
     .on('metadata', function (result) {
       t.strictEqual(result.title, '07. Shadow On The Sun', 'title');
-      t.deepEqual(result.artist, ['Audioslave', 'Chris Cornell'], 'artist');
+      t.deepEqual(result.artist, ['Audioslave/Chris Cornell'], 'artist');
       t.deepEqual(result.albumartist, ['Audioslave'], 'albumartist');
       t.strictEqual(result.album, 'Audioslave', 'album');
       t.strictEqual(result.year, '2002', 'year');
@@ -30,7 +30,7 @@ test('monkeysaudio (.ape)', function (t) {
       t.strictEqual(result, '07. Shadow On The Sun', 'aliased title');
     })
     .on('artist', function (result) {
-      t.deepEqual(result, ['Audioslave', 'Chris Cornell'], 'aliased artist');
+      t.deepEqual(result, ['Audioslave/Chris Cornell'], 'aliased artist');
     })
     .on('albumartist', function (result) {
       t.deepEqual(result, ['Audioslave'], 'aliased albumartist');
