@@ -10,7 +10,8 @@
     "node-bitarray": "0.0.2",
     "strtok2": "~1.0.0",
     "sum-component": "^0.1.1",
-    "through": "~2.3.4"
+    "through": "~2.3.4",
+    "xtend": "^4.0.0"
   },
   "keywords": [
     "id3",
