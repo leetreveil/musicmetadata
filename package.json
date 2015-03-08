@@ -4,13 +4,17 @@
   "version": "1.0.0",
   "author": "Lee Treveil",
   "dependencies": {
+    "buffer-equal": "0.0.0",
+    "bun": "0.0.11",
+    "calippo": "0.0.2",
     "deep-equal": "0.2.1",
     "filereader-stream": "^0.2.0",
     "iconv-lite": "^0.4.4",
     "node-bitarray": "0.0.2",
     "strtok2": "~1.0.0",
     "sum-component": "^0.1.1",
-    "through": "~2.3.4"
+    "through": "~2.3.4",
+    "through2": "^0.6.3"
   },
   "keywords": [
     "id3",
