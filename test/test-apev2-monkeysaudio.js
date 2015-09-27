@@ -13,6 +13,7 @@ test('monkeysaudio (.ape)', function (t) {
 
   mm(sample, function (err, result) {
     t.error(err)
+    // console.log(result)
     t.strictEqual(result.title, '07. Shadow On The Sun', 'title')
     t.deepEqual(result.artist, ['Audioslave', 'Chris Cornell'], 'artist')
     t.deepEqual(result.albumartist, ['Audioslave'], 'albumartist')
