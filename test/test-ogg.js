@@ -1,3 +1,6 @@
+var SegfaultHandler = require('segfault-handler');
+SegfaultHandler.registerHandler();
+
 var path = require('path')
 var mm = require('..')
 var fs = require('fs')

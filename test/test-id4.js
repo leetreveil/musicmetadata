@@ -12,6 +12,7 @@ test('id4', function (t) {
 
   id3(sample, { duration: true }, function (err, result) {
     t.error(err)
+    // console.log(result)
     t.strictEqual(result.title, 'Voodoo People (Pendulum Remix)', 'title')
     t.strictEqual(result.artist[0], 'The Prodigy', 'artist')
     t.strictEqual(result.albumartist[0], 'Pendulum', 'albumartist')

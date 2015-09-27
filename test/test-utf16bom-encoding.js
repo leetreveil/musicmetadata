@@ -12,6 +12,7 @@ test('should read utf16bom encoded metadata correctly', function (t) {
 
   id3(sample, function (err, result) {
     t.error(err)
+    // console.log(result)
     t.equal(result.title, "It's All Over You Know", 'title')
     t.equal(result.artist[0], 'The Apers', 'artist')
     t.equal(result.albumartist[0], 'The Apers', 'albumartist')
