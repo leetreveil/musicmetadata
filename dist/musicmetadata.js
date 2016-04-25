@@ -259,10 +259,10 @@ var musicmetadata = require('./index')
 var Stream = require('stream').Stream
 
 module.exports = function (stream, opts, callback) {
-  return musicmetadata(wrapFileWithStream(stream), opts, callback)
+  return musicmetadata(wrapFileWithStream(stream, opts), opts, callback)
 }
 
-function wrapFileWithStream (file) {
+function wrapFileWithStream (file, opts) {
   var stream = through(function write (data) {
     if (data.length > 0) this.queue(data)
   }, null, {autoDestroy: false})
@@ -277,7 +277,7 @@ function wrapFileWithStream (file) {
     })
   }
 
-  if (file instanceof Stream) {
+  if (file instanceof Stream || opts.assumeStream) {
     return file.pipe(stream)
   }
   if (file instanceof window.FileList) {
