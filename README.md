@@ -29,9 +29,11 @@ var fs = require('fs');
 var mm = require('musicmetadata');
 
 // create a new parser from a node ReadStream
-var parser = mm(fs.createReadStream('sample.mp3'), function (err, metadata) {
+var readableStream = fs.createReadStream('sample.mp3');
+var parser = mm(readableStream, function (err, metadata) {
   if (err) throw err;
   console.log(metadata);
+  readableStream.close();
 });
 ```
 
@@ -62,15 +64,19 @@ parser.on('TLEN', function (result) {
 You can also read the duration; to calculate the duration `musicmetadata` may need to parse the entire file
 so only enable this if you need the functionality.
 ```javascript
-mm(fs.createReadStream('sample.mp3'), { duration: true }, function (err, metadata) {
-  
+var readableStream = fs.createReadStream('sample.mp3');
+mm(readableStream, { duration: true }, function (err, metadata) {
+  console.log(metadata);
+  readableStream.close();
 });
 ```
 
 Note that in order to read the duration for streams that are not file streams, you must also pass the size of the file in bytes.
 ```javascript
-mm(fs.createReadStream('sample.mp3'), { duration: true, fileSize: 26838 }, function (err, metadata) {
-  
+var readableStream = fs.createReadStream('sample.mp3');
+mm(readableStream, { duration: true, fileSize: 26838 }, function (err, metadata) {
+  console.log(metadata);
+  readableStream.close();
 });
 ```
 
