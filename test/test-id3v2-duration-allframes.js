@@ -24,6 +24,11 @@ test('id3v2-duration-allframes', function (t) {
         picture: {},
         duration: 1.48928125 })
     t.end()
+  }, function (cb) {
+    fs.stat(sample.path, function (err, stats) {
+      if (err) throw err
+      cb(stats.size)
+    })
   })
     .on('duration', function (result) {
       t.strictEqual(result, 1.48928125, 'duration')
