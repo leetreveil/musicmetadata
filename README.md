@@ -83,6 +83,14 @@ mm(fs.createReadStream('sample.mp3'), { duration: true, fileSize: 26838 }, funct
 });
 ```
 
+If you need to pass custom data on to the callback, just use the `customData` option:
+```javascript
+var parser = mm(fs.createReadStream('sample.mp3'), { customData: { recordID:3, someContrivedField:'contrived data', fileName: 'sample.mp3' } }, function (err, metadata) {
+  console.log(metadata.customData.someContrivedField);
+});
+```
+The `customData` option supports all data types, so pass it whatever you need to get what you are doing done.
+
 Licence
 -----------------
 
