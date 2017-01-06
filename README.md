@@ -83,6 +83,17 @@ mm(fs.createReadStream('sample.mp3'), { duration: true, fileSize: 26838 }, funct
 });
 ```
 
+Now compatible with [request.js](https://github.com/request/request)
+```javascript
+var request = require('request');
+
+// Go get the duration of the MP3.
+mm(request.get('http://www.example.com/some.mp3', { method: "HEAD" }), { duration: true }, function(err, metadata) {
+  
+});
+```
+
+
 Licence
 -----------------
 
