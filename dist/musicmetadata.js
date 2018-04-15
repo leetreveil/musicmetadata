@@ -1199,6 +1199,14 @@ exports.readData = function readData (b, type, flags, major) {
 
     case 'ULT':
     case 'USLT':
+	  var lyrc = []
+      lyrc[0] = decodeString(b, 'utf16')
+      lyrc[1] = decodeString(b, 'utf8')
+	  //iso-8859-1 | utf16 (utf16le) | utf8
+    
+      output = [lyrc]
+      break
+
     case 'COM':
     case 'COMM':
       var out = {}
@@ -1216,6 +1224,17 @@ exports.readData = function readData (b, type, flags, major) {
 
       output = [out]
       break
+
+    case 'POPM':
+      var rating = {}
+
+      fzero = findZero(b, offset, length, encoding)
+      rating.owner_identifier = decodeString(b.slice(offset, fzero), encoding)
+      offset = fzero + nullTerminatorLength
+
+      rating.rating = b.slice(offset, length)[0]
+      output = [rating]
+	 	break
 
     case 'UFID':
       var ufid = {}
@@ -1449,6 +1468,10 @@ module.exports = function (stream, opts, callback) {
     genre: [],
     disk: { no: 0, of: 0 },
     picture: [],
+    comment: [],
+    ratings: [],
+    lyrics: [],
+    ulyrics: [],
     duration: 0
   }
 
@@ -1583,7 +1606,9 @@ function lookupAlias (event) {
     'Cover Art (Back)'],
     ['composer', 'TCOM', 'TCM', '©wrt', 'COMPOSER'],
     ['duration'],
-    ['lyrics', 'SYLT']
+    ['ratings', 'POPM'],
+    ['lyrics', 'SYLT'],
+    ['ulyrics', 'USLT']
   ]
 
   return mappings.reduce(function (a, b) {
