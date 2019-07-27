@@ -1,45 +1,100 @@
 {
-  "name": "musicmetadata",
+  "name": "music-metadata",
   "description": "Streaming music metadata parser for node and the browser.",
-  "version": "2.0.5",
-  "author": "Lee Treveil",
-  "dependencies": {
-    "deep-equal": "0.2.1",
-    "filereader-stream": "^0.2.0",
-    "is-stream": "^1.1.0",
-    "strtok2": "^1.0.4",
-    "through": "~2.3.4"
+  "version": "4.2.1",
+  "author": {
+    "name": "Borewit",
+    "url": "https://github.com/Borewit"
   },
   "keywords": [
-    "id3",
-    "id3v1",
-    "id3v2",
+    "music",
+    "metadata",
+    "meta",
+    "audio",
+    "tag",
+    "tags",
+    "MusicBrainz",
+    "Discogs",
+    "Picard",
+    "ID3",
+    "ID3v1",
+    "ID3v2",
     "m4a",
+    "mp3",
     "mp4",
-    "vorbis",
+    "Vorbis",
     "ogg",
     "flac",
     "asf",
     "wma",
     "wmv",
-    "tags",
-    "tag"
+    "ape",
+    "MonkeyAudio",
+    "aiff",
+    "wav",
+    "WavPack",
+    "Opus",
+    "speex",
+    "musepack",
+    "mpc",
+    "dsd",
+    "dsf",
+    "mpc",
+    "dff",
+    "dsdiff",
+    "aac",
+    "adts"
   ],
   "main": "lib",
-  "browser": "lib/browser",
+  "typings": "lib/index",
+  "files": [
+    "lib/"
+  ],
   "scripts": {
-    "pretest": "standard && jshint lib/*.js test/*.js",
-    "test": "[ ! -d 'test/' ] && echo 'The test directory is not included with the project due to the size of the test audio files. If you want to run the tests you can git clone the project.' || tape test/test-*.js",
-    "test-browser": "for f in test/test-*.js; do browserify -t brfs $f | testling; done",
-    "dist": "browserify lib/browser.js --standalone 'musicmetadata' -o dist/musicmetadata.js"
+    "clean": "del-cli lib/** src/**/*.js src/**/*.js.map src/**/*.d.ts test/**/*.js test/**/*.js.map",
+    "compile-src": "tsc -p src",
+    "compile-test": "tsc -p test",
+    "compile-doc": "tsc -p doc-gen",
+    "compile": "npm run compile-src && npm run compile-test && npm run compile-doc",
+    "lint-ts": "tslint 'src/**/*.ts' 'example/typescript/*.ts' --exclude 'src/**/*.d.ts' 'test/**/*.ts' --exclude 'test/**/*.d.ts' 'doc-gen/**/*.ts'",
+    "lint-md": "remark -u preset-lint-recommended .",
+    "lint": "npm run lint-md && npm run lint-ts",
+    "test": "mocha --require ts-node/register --require source-map-support/register --full-trace test/test-*.ts",
+    "build": "npm run clean && npm run compile && npm run doc-gen",
+    "start": "npm-run-all compile lint cover-test",
+    "test-coverage": "nyc npm run test",
+    "send-coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "send-codacy": "nyc report --reporter=text-lcov | codacy-coverage",
+    "doc-gen": "node doc-gen/gen.js"
+  },
+  "dependencies": {
+    "content-type": "^1.0.4",
+    "debug": "^4.1.0",
+    "file-type": "^12.1.0",
+    "media-typer": "^1.1.0",
+    "strtok3": "^3.0.0",
+    "token-types": "^1.0.1"
   },
   "devDependencies": {
-    "tape": "^4.5.1",
-    "jshint": "~2.5.10",
-    "brfs": "1.2.0",
-    "standard": "^3.0.0",
-    "browserify": "^13.0.0",
-    "testling": "^1.7.1"
+    "@types/chai": "^4.1.7",
+    "@types/debug": "^4.1.4",
+    "@types/file-type": "^10.6.0",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^12.0.2",
+    "chai": "^4.2.0",
+    "coveralls": "^3.0.5",
+    "del-cli": "^2.0.0",
+    "eslint": "^6.0.1",
+    "mime": "^2.4.0",
+    "mocha": "^6.1.4",
+    "npm-run-all": "^4.1.5",
+    "nyc": "^14.1.1",
+    "remark-cli": "^7.0.0",
+    "remark-preset-lint-recommended": "^3.0.2",
+    "source-map-support": "^0.5.12",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.3"
   },
   "testling": {
     "files": [
@@ -53,22 +108,31 @@
     ]
   },
   "engines": {
-    "node": "*"
+    "node": ">=8"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/leetreveil/musicmetadata.git"
-  },
-  "jshintConfig": {
-    "asi": true,
-    "node": true,
-    "maxlen": 100,
-    "indent": 2
+    "url": "git+https://github.com/borewit/music-metadata.git"
   },
   "license": "MIT",
-  "standard": {
-    "ignore": [
-      "**/dist/**"
-    ]
+  "bugs": {
+    "url": "https://github.com/Borewit/music-metadata/issues"
+  },
+  "nyc": {
+    "exclude": [
+      "lib/**",
+      "test/**/*.ts",
+      "src/**/*.js"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "sourceMap": true,
+    "instrument": true,
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "report-dir": "coverage"
   }
 }

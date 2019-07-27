@@ -1,8 +1,23 @@
 language: node_js
 node_js:
- - "0.10"
- - "0.11"
- - "0.12"
- - "4"
- - "6"
- - "7"
+ - "8"
+ - "10"
+ - "11"
+ - "12"
+install:
+- yarn install
+script:
+- yarn run lint
+- yarn run compile
+- yarn run test
+
+jobs:
+  include:
+    - stage: after_success
+      script:
+      - yarn install
+      - yarn run test-coverage
+      - yarn run send-coveralls
+      - yarn add -D codacy-coverage
+      - yarn run send-codacy
+      node_js: 10
